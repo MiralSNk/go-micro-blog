@@ -23,10 +23,12 @@ jobs:
                   registry: ghcr.io
                   username: ${{github.actor}}
                   password: ${{secrets.GITHUB_TOKEN}}
-
+            
             - name: Build and push Docker images
               run: |
-                IMAGE_PREFIX=ghcr.io/${{github.repository}}
+                export IMAGE_PREFIX=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+                echo "Using prefix: $IMAGE_PREFIX"
+
                 docker build -t $IMAGE_PREFIX/gateway:${{github.sha}} -f gateway/Dockerfile ./gateway
                 docker push $IMAGE_PREFIX/gateway:${{ github.sha }}
 

@@ -2,9 +2,10 @@ name: Build and Test
 
 on: 
   push:
-    branches: ["main"]
+    branches: ["feat/**", "dev","main", "release/**"]
   pull_request: 
     branches: ["dev", "main"]
+    types: [opened, reopened]
 
 jobs:
   build:
