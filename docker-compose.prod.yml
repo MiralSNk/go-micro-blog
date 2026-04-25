@@ -1,6 +1,6 @@
 services:
   gateway:
-    image: ghcr.io/myorg/blog/gateway:${IMAGE_TAG:-latest}
+    image: ghcr.io/miralsnk/go-micro-blog/gateway:${IMAGE_TAG:-latest}
     restart: unless-stopped
     ports:
       - "80:8080"
