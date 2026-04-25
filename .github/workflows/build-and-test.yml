@@ -15,4 +15,4 @@ jobs:
         
       - name: Build Docker images
         run: |
-          docker build -t blog-gateway:${{github.sha}} -f gateway/Docker ./gateway
+          docker build -t blog-gateway:${{github.sha}} -f gateway/Dockerfile ./gateway
