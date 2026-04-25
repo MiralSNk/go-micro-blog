@@ -24,12 +24,11 @@ jobs:
                   username: ${{github.actor}}
                   password: ${{secrets.GITHUB_TOKEN}}
             
-            - name: Set lowercase repo name
-              run: |
-                echo "IMAGE_PREFIX=ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
-
             - name: Build and push Docker images
               run: |
+                export IMAGE_PREFIX=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+                echo "Using prefix: $IMAGE_PREFIX"
+
                 docker build -t $IMAGE_PREFIX/gateway:${{github.sha}} -f gateway/Dockerfile ./gateway
                 docker push $IMAGE_PREFIX/gateway:${{ github.sha }}
 
