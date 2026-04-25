@@ -1,0 +1,34 @@
+name: Deploy to Dev
+
+on:
+    push:
+        branches: ["dev"]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            
+            - name: Copy project to server via rsync
+              uses: burnett01/rsync-deployments@6.0.0
+              with:
+                  switches: -avzr --delete --exclude=".git" --exclude=".github"
+                  path: ./
+                  remote_path: /home/${{ secrets.SERVER_USER_DEV }}/dev-blog/
+                  remote_host: ${{ secrets.SERVER_HOST_DEV }}
+                  remote_user: ${{ secrets.SERVER_USER_DEV }}
+                  remote_key: ${{ secrets.SSH_PRIVATE_KEY_DEV }}
+
+            - name: Deploy with Docker Compose (dev)
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                  host: ${{ secrets.SERVER_HOST_DEV }}
+                  username: ${{ secrets.SERVER_USER_DEV }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY_DEV }}
+                  script: |
+                    mkdir -p /home/${{ secrets.SERVER_USER_DEV }}/dev-blog
+                    cd /home/${{ secrets.SERVER_USER_DEV }}/dev-blog
+                    docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+                    sleep 5
+                    docker ps
