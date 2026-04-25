@@ -10,15 +10,16 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             
-            - name: Copy project to server via rsync
-              uses: burnett01/rsync-deployments@6.0.0
+            - name: Copy project to server via SCP
+              uses: appleboy/scp-action@v0.1.7
               with:
-                  switches: -avzr --delete --exclude=".git" --exclude=".github"
-                  path: ./
-                  remote_path: /home/${{ secrets.SERVER_USER_DEV }}/dev-blog/
-                  remote_host: ${{ secrets.SERVER_HOST_DEV }}
-                  remote_user: ${{ secrets.SERVER_USER_DEV }}
-                  remote_key: ${{ secrets.SSH_PRIVATE_KEY_DEV }}
+                  host: ${{ secrets.SERVER_HOST_DEV }}
+                  username: ${{ secrets.SERVER_USER_DEV }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY_DEV }}
+                  source: "./"
+                  target: "/home/${{ secrets.SERVER_USER_DEV }}/dev-blog/"
+                  rm: true
+                  strip_components: 0
 
             - name: Deploy with Docker Compose (dev)
               uses: appleboy/ssh-action@v1.0.3
