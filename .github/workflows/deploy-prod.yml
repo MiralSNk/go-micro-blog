@@ -23,10 +23,13 @@ jobs:
                   registry: ghcr.io
                   username: ${{github.actor}}
                   password: ${{secrets.GITHUB_TOKEN}}
+            
+            - name: Set lowercase repo name
+              run: |
+                echo "IMAGE_PREFIX=ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
 
             - name: Build and push Docker images
               run: |
-                IMAGE_PREFIX=ghcr.io/${{github.repository}}
                 docker build -t $IMAGE_PREFIX/gateway:${{github.sha}} -f gateway/Dockerfile ./gateway
                 docker push $IMAGE_PREFIX/gateway:${{ github.sha }}
 
