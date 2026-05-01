@@ -29,7 +29,7 @@ jobs:
                 export IMAGE_PREFIX=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
                 echo "Using prefix: $IMAGE_PREFIX"
 
-                docker build -t $IMAGE_PREFIX/gateway:${{github.sha}} -f gateway/Dockerfile ./gateway
+                docker build -t $IMAGE_PREFIX/gateway:${{github.sha}} -f gateway/Dockerfile .
                 docker push $IMAGE_PREFIX/gateway:${{ github.sha }}
 
                 docker tag $IMAGE_PREFIX/gateway:${{ github.sha }} $IMAGE_PREFIX/gateway:latest
