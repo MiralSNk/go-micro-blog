@@ -2,5 +2,5 @@ services:
   gateway:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: gateway/Dockerfile
     restart: unless-stopped
