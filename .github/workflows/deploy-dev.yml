@@ -30,6 +30,7 @@ jobs:
                   script: |
                     mkdir -p /home/${{ secrets.SERVER_USER_DEV }}/dev-blog
                     cd /home/${{ secrets.SERVER_USER_DEV }}/dev-blog
+                    docker compose -f docker-compose.yml -f docker-compose.dev.yml down
                     docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
                     sleep 5
                     docker ps
