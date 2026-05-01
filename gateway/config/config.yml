@@ -1,0 +1,3 @@
+name: "gateway"
+port: ":8080"
+log_level: "local" # dev, prod
