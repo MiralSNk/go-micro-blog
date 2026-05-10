@@ -3,7 +3,7 @@ package router
 import (
 	"log/slog"
 
-	"github.com/MiralSNk/go-micro-blog/internal/gateway/handlers/hello"
+	"github.com/MiralSNk/go-micro-blog/internal/gateway/handler/hello"
 	loggermiddleware "github.com/MiralSNk/go-micro-blog/internal/gateway/middlewares/loggerMiddleware"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
