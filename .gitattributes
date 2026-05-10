@@ -1,0 +1,5 @@
+docker-compose*.yml linguist-vendored
+.dockerignore linguist-vendored
+Dockerfile* linguist-vendored
+
+*.go linguist-language=Go
